@@ -39,6 +39,9 @@ const LocationCard: NextComponentType<
             デリバリー可能: {props.location.canDeliverDisplay()}
           </Typography>
           <Typography variant="body2" component="p">
+            電話番号: {props.location.phoneNumber}
+          </Typography>
+          <Typography variant="body2" component="p">
             住所: {props.location.addressDisplay()}
           </Typography>
           <Typography variant="body2" component="p">
