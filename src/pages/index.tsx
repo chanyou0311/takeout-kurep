@@ -2,6 +2,7 @@ import { NextPage } from "next";
 import Link from "next/link";
 import db from "../lib/db";
 import Restaurant from "../domain/restaurant/restaurant";
+import RestaurantFirebaseRepository from "../infrastructure/restaurant/restaurantFirebaseRepository";
 import { useState, FormEvent, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../components/Header";
@@ -46,15 +47,20 @@ const Home: NextPage<{ restaurants: Restaurant[] }> = () => {
 
   useEffect(() => {
     console.log("get restaurants");
-    const unsubscribe = db.collection("restaurants").onSnapshot((snapshot) => {
-      const restaurants = snapshot.docs.map((doc) =>
-        Restaurant.fromDocumentData(doc.data())
-      );
-      setRestaurants(restaurants);
-    });
+    let isMounted = true;
+
+    (async () => {
+      const restaurantRepository = new RestaurantFirebaseRepository();
+      const newRestaurants = await restaurantRepository.getAll();
+      if (isMounted) {
+        setRestaurants(newRestaurants);
+      }
+      console.log(newRestaurants);
+    })();
+
     return () => {
+      isMounted = false;
       console.log("cleanup");
-      unsubscribe();
     };
   }, []);
 
