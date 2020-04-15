@@ -3,24 +3,24 @@ import Header from "../../components/Header";
 import { NextPage } from "next";
 import { useState, useEffect } from "react";
 import db from "../../lib/db";
-import Location from "../../domain/location/location";
+import Restaurant from "../../domain/restaurant/restaurant";
 
-const LocationDetail: NextPage = () => {
+const RestaurantDetail: NextPage = () => {
   const router = useRouter();
-  const [location, setLocation] = useState<Location>(null);
+  const [restaurant, setRestaurant] = useState<Restaurant>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const locationId = router.query.id;
-    if (typeof locationId === "string") {
-      console.log("get location");
+    const restaurantId = router.query.id;
+    if (typeof restaurantId === "string") {
+      console.log("get restaurant");
       const unsubscribe = db
-        .collection("locations")
-        .doc(locationId)
+        .collection("restaurants")
+        .doc(restaurantId)
         .onSnapshot((snapshot) => {
           if (snapshot.exists) {
-            const location = Location.fromDocumentData(snapshot.data());
-            setLocation(location);
+            const restaurant = Restaurant.fromDocumentData(snapshot.data());
+            setRestaurant(restaurant);
           } else {
             console.log("snapshot is not exists");
             router.push("");
@@ -42,11 +42,11 @@ const LocationDetail: NextPage = () => {
     return (
       <div>
         <Header />
-        <h2>{location.name}</h2>
-        <p>{location.id}</p>
+        <h2>{restaurant.name}</h2>
+        <p>{restaurant.id}</p>
       </div>
     );
   }
 };
 
-export default LocationDetail;
+export default RestaurantDetail;

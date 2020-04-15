@@ -5,7 +5,7 @@ import CardActionArea from "@material-ui/core/CardActionArea";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import { NextComponentType, NextPageContext } from "next";
-import Location from "../domain/location/location";
+import Restaurant from "../domain/restaurant/restaurant";
 
 const useStyles = makeStyles({
   root: {
@@ -18,10 +18,10 @@ const useStyles = makeStyles({
   },
 });
 
-const LocationCard: NextComponentType<
+const RestaurantCard: NextComponentType<
   NextPageContext,
   {},
-  { location: Location }
+  { restaurant: Restaurant }
 > = (props) => {
   const classes = useStyles();
 
@@ -30,39 +30,39 @@ const LocationCard: NextComponentType<
       <CardActionArea>
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">
-            {props.location.name}
+            {props.restaurant.name}
           </Typography>
           <Typography variant="body2" component="p">
-            テイクアウト可能: {props.location.canTakeOutDisplay()}
+            テイクアウト可能: {props.restaurant.canTakeOutDisplay()}
           </Typography>
           <Typography variant="body2" component="p">
-            デリバリー可能: {props.location.canDeliverDisplay()}
+            デリバリー可能: {props.restaurant.canDeliverDisplay()}
           </Typography>
           <Typography variant="body2" component="p">
-            電話番号: {props.location.phoneNumber}
+            電話番号: {props.restaurant.phoneNumber}
           </Typography>
           <Typography variant="body2" component="p">
-            住所: {props.location.addressDisplay()}
+            住所: {props.restaurant.addressDisplay()}
           </Typography>
           <Typography variant="body2" component="p">
-            営業開始時間: {props.location.openingTime}
+            営業開始時間: {props.restaurant.openingTime}
           </Typography>
           <Typography variant="body2" component="p">
-            営業終了時間: {props.location.closingTime}
+            営業終了時間: {props.restaurant.closingTime}
           </Typography>
           <Typography variant="body2" component="p">
-            その他: {props.location.noteDisplay}
+            その他: {props.restaurant.noteDisplay}
           </Typography>
           <Typography variant="body2" component="p">
-            作成日時: {props.location.createdAtDisplay()}
+            作成日時: {props.restaurant.createdAtDisplay()}
           </Typography>
           <Typography variant="body2" component="p">
-            更新日時: {props.location.updatedAtDisplay()}
+            更新日時: {props.restaurant.updatedAtDisplay()}
           </Typography>
         </CardContent>
       </CardActionArea>
       {/* <CardActions>
-        <Link href="/locations/[id]" as={`/locations/${props.location.id}`}>
+        <Link href="/restaurants/[id]" as={`/restaurants/${props.restaurant.id}`}>
           <Button color="primary" disabled>
             詳しく見る（未実装）
           </Button>
@@ -72,4 +72,4 @@ const LocationCard: NextComponentType<
   );
 };
 
-export default LocationCard;
+export default RestaurantCard;

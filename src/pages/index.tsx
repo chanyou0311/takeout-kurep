@@ -1,7 +1,7 @@
 import { NextPage } from "next";
 import Link from "next/link";
 import db from "../lib/db";
-import Location from "../domain/location/location";
+import Restaurant from "../domain/restaurant/restaurant";
 import { useState, FormEvent, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Header from "../components/Header";
@@ -20,7 +20,7 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import CssBaseline from "@material-ui/core/CssBaseline";
-import LocationCard from "../components/LocationCard";
+import RestaurantCard from "../components/RestaurantCard";
 
 type FormData = {
   name: string;
@@ -40,17 +40,17 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 
-const Home: NextPage<{ locations: Location[] }> = () => {
+const Home: NextPage<{ restaurants: Restaurant[] }> = () => {
   const { register, handleSubmit, errors, reset } = useForm<FormData>();
-  const [locations, setLocations] = useState<Location[]>([]);
+  const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
   useEffect(() => {
-    console.log("get locations");
-    const unsubscribe = db.collection("locations").onSnapshot((snapshot) => {
-      const locations = snapshot.docs.map((doc) =>
-        Location.fromDocumentData(doc.data())
+    console.log("get restaurants");
+    const unsubscribe = db.collection("restaurants").onSnapshot((snapshot) => {
+      const restaurants = snapshot.docs.map((doc) =>
+        Restaurant.fromDocumentData(doc.data())
       );
-      setLocations(locations);
+      setRestaurants(restaurants);
     });
     return () => {
       console.log("cleanup");
@@ -59,8 +59,8 @@ const Home: NextPage<{ locations: Location[] }> = () => {
   }, []);
 
   // const onSubmit = (data: FormData) => {
-  //   const newLocation = Location.createNewLocation(data.name);
-  //   db.collection("locations").doc(newLocation.id).set(newLocation.toObject());
+  //   const newRestaurant = Restaurant.createNewRestaurant(data.name);
+  //   db.collection("restaurants").doc(newRestaurant.id).set(newRestaurant.toObject());
   //   reset();
   // };
   const onDelete = (data) => {
@@ -91,9 +91,9 @@ const Home: NextPage<{ locations: Location[] }> = () => {
         <h2>ロケーション一覧</h2>
         <div className={classes.root}>
           <Grid container spacing={3}>
-            {locations.map((location) => (
+            {restaurants.map((restaurant) => (
               <Grid item xs={12} sm={12} md={6} lg={3}>
-                <LocationCard location={location} />
+                <RestaurantCard restaurant={restaurant} />
               </Grid>
             ))}
           </Grid>

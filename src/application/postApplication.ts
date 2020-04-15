@@ -1,8 +1,8 @@
 import Application from "./support/application";
-import LocationRepositoryInterface from "../domain/location/locationRepositoryInterface";
+import RestaurantRepositoryInterface from "../domain/restaurant/restaurantRepositoryInterface";
 
-export default class LocationApplication extends Application {
-  constructor(private locationRepository: LocationRepositoryInterface) {
+export default class RestaurantApplication extends Application {
+  constructor(private restaurantRepository: RestaurantRepositoryInterface) {
     super();
   }
 }

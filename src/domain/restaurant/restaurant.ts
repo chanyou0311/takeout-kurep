@@ -2,7 +2,7 @@ import Entity from "../support/entity";
 import { firestore } from "firebase";
 import * as uuid from "node-uuid";
 
-export default class Location extends Entity {
+export default class Restaurant extends Entity {
   constructor(
     public id: string,
     public name: string,
@@ -31,8 +31,8 @@ export default class Location extends Entity {
     canTakeOut: boolean,
     createdAt: Date,
     updatedAt: Date
-  ): Location {
-    return new Location(
+  ): Restaurant {
+    return new Restaurant(
       id,
       name,
       address,
@@ -46,7 +46,7 @@ export default class Location extends Entity {
       updatedAt
     );
   }
-  static createNewLocation(
+  static createNewRestaurant(
     name: string,
     canDeliver: boolean,
     canTakeOut: boolean,
@@ -55,12 +55,12 @@ export default class Location extends Entity {
     phoneNumber: string = "",
     address: string = "",
     note: string = ""
-  ): Location {
+  ): Restaurant {
     const id = uuid.v4();
     const now = new Date();
     const createdAt = now;
     const updatedAt = now;
-    return new Location(
+    return new Restaurant(
       id,
       name,
       address,
@@ -75,8 +75,8 @@ export default class Location extends Entity {
     );
   }
 
-  static fromDocumentData(data: firestore.DocumentData): Location {
-    return new Location(
+  static fromDocumentData(data: firestore.DocumentData): Restaurant {
+    return new Restaurant(
       data.id,
       data.name,
       data.address,
