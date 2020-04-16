@@ -2,96 +2,80 @@ import Entity from "../support/entity";
 import { firestore } from "firebase";
 import * as uuid from "node-uuid";
 
-export default class Restaurant extends Entity {
-  constructor(
-    public id: string,
-    public name: string,
-    public address: string,
-    public openingTime: string,
-    public closingTime: string,
-    public phoneNumber: string,
-    public note: string,
-    public canDeliver: boolean,
-    public canTakeOut: boolean,
-    public createdAt: Date,
-    public updatedAt: Date
-  ) {
+interface IRestaurant {
+  id: string;
+  name: string;
+  address: string;
+  openingTime: string;
+  closingTime: string;
+  phoneNumber: string;
+  note: string;
+  canDeliver: boolean;
+  canTakeOut: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export default class Restaurant extends Entity implements IRestaurant {
+  id: string;
+  name: string;
+  address: string;
+  openingTime: string;
+  closingTime: string;
+  phoneNumber: string;
+  note: string;
+  canDeliver: boolean;
+  canTakeOut: boolean;
+  createdAt: Date;
+  updatedAt: Date;
+
+  constructor(initialValues: IRestaurant) {
     super();
+    this.id = initialValues.id;
+    this.name = initialValues.name;
+    this.address = initialValues.address;
+    this.openingTime = initialValues.openingTime;
+    this.closingTime = initialValues.closingTime;
+    this.phoneNumber = initialValues.phoneNumber;
+    this.note = initialValues.note;
+    this.canDeliver = initialValues.canDeliver;
+    this.canTakeOut = initialValues.canTakeOut;
+    this.createdAt = initialValues.createdAt;
+    this.updatedAt = initialValues.updatedAt;
   }
 
-  static reconstruct(
-    id: string,
-    name: string,
-    address: string,
-    openingTime: string,
-    closingTime: string,
-    phoneNumber: string,
-    note: string,
-    canDeliver: boolean,
-    canTakeOut: boolean,
-    createdAt: Date,
-    updatedAt: Date
-  ): Restaurant {
-    return new Restaurant(
-      id,
-      name,
-      address,
-      openingTime,
-      closingTime,
-      phoneNumber,
-      note,
-      canDeliver,
-      canTakeOut,
-      createdAt,
-      updatedAt
-    );
+  static reconstruct(values: IRestaurant): Restaurant {
+    return new Restaurant(values);
   }
+
   static createNewRestaurant(
-    name: string,
-    canDeliver: boolean,
-    canTakeOut: boolean,
-    openingTime: string = "",
-    closingTime: string = "",
-    phoneNumber: string = "",
-    address: string = "",
-    note: string = ""
+    values: Omit<IRestaurant, "id" | "createdAt" | "updatedAt">
   ): Restaurant {
     const id = uuid.v4();
     const now = new Date();
     const createdAt = now;
     const updatedAt = now;
-    return new Restaurant(
-      id,
-      name,
-      address,
-      openingTime,
-      closingTime,
-      phoneNumber,
-      note,
-      canDeliver,
-      canTakeOut,
-      createdAt,
-      updatedAt
-    );
+    return new Restaurant({ ...values, id, createdAt, updatedAt });
   }
 
   static fromDocumentData(data: firestore.DocumentData): Restaurant {
-    return new Restaurant(
-      data.id,
-      data.name,
-      data.address,
-      data.openingTime,
-      data.closingTime,
-      data.phoneNumber,
-      data.note,
-      data.canDeliver,
-      data.canTakeOut,
-      data.createdAt.toDate(),
-      data.updatedAt.toDate()
-    );
+    const values = {
+      id: data.id,
+      name: data.name,
+      address: data.address,
+      openingTime: data.openingTime,
+      closingTime: data.closingTime,
+      phoneNumber: data.phoneNumber,
+      note: data.note,
+      canDeliver: data.canDeliver,
+      canTakeOut: data.canTakeOut,
+      createdAt: data.createdAt.toDate(),
+      updatedAt: data.updatedAt.toDate(),
+    };
+    return new Restaurant(values);
   }
 
-  public toObject() {
+  public toObject(): IRestaurant {
     return {
       id: this.id,
       name: this.name,
