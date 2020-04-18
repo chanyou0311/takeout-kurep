@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import Restaurant from "../../domain/restaurant/restaurant";
 import RestaurantFirebaseRepository from "../../infrastructure/restaurant/restaurantFirebaseRepository";
@@ -24,8 +24,9 @@ import {
   TextareaAutosize,
   Avatar,
   Paper,
+  CircularProgress,
 } from "@material-ui/core";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+import CheckIcon from "@material-ui/icons/Check";
 import Link from "next/link";
 
 const useStyles = makeStyles((theme) => ({
@@ -65,12 +66,18 @@ const useStyles = makeStyles((theme) => ({
 
 const RestaurantCreate: NextPage = () => {
   const classes = useStyles();
-  const { register, handleSubmit, watch, errors } = useForm<Restaurant>();
+  const [isCreating, setIsCreating] = useState(false);
+  const [isCreated, setIsCreated] = useState(false);
+  const { register, handleSubmit, errors } = useForm<Restaurant>();
   const onSubmit = handleSubmit((data) => {
     (async () => {
+      setIsCreating(true);
       const restaurantRepository = new RestaurantFirebaseRepository();
       const restaurant = Restaurant.createNewRestaurant(data);
-      restaurantRepository.insert(restaurant);
+      // restaurantRepository.insert(restaurant);
+
+      setIsCreating(false);
+      setIsCreated(true);
     })();
   });
   return (
@@ -212,9 +219,15 @@ const RestaurantCreate: NextPage = () => {
               color="primary"
               size="large"
               className={classes.submit}
+              disabled={isCreated}
             >
               新規追加
             </Button>
+
+            {isCreating && <CircularProgress />}
+            {isCreated && (
+              <Typography component="p">追加されました。</Typography>
+            )}
           </form>
         </Paper>
       </Container>
