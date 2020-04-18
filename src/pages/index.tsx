@@ -5,7 +5,6 @@ import Restaurant from "../domain/restaurant/restaurant";
 import RestaurantFirebaseRepository from "../infrastructure/restaurant/restaurantFirebaseRepository";
 import { useState, FormEvent, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import Header from "../components/Header";
 import Button from "@material-ui/core/Button";
 import {
   AppBar,
@@ -29,6 +28,12 @@ type FormData = {
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
+    appbar: {
+      flexGrow: 1,
+    },
+    title: {
+      flexGrow: 1,
+    },
     root: {
       // flexGrow: 1,
       width: "100%",
@@ -88,9 +93,16 @@ const Home: NextPage<{ restaurants: Restaurant[] }> = () => {
   return (
     <React.Fragment>
       <CssBaseline></CssBaseline>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.appbar}>
         <Toolbar>
-          <Typography variant="h6">TAKEOUT KUREP</Typography>
+          <Link href="/">
+            <Typography variant="h6" className={classes.title}>
+              TAKEOUT KUREP
+            </Typography>
+          </Link>
+          <Link href="/restaurants/create">
+            <Button color="inherit">店舗の新規追加</Button>
+          </Link>
         </Toolbar>
       </AppBar>
       <Container>

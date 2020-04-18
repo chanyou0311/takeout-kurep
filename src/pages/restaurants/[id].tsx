@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import Header from "../../components/Header";
 import { NextPage } from "next";
 import { useState, useEffect } from "react";
 import db from "../../lib/db";
@@ -41,7 +40,6 @@ const RestaurantDetail: NextPage = () => {
   } else {
     return (
       <div>
-        <Header />
         <h2>{restaurant.name}</h2>
         <p>{restaurant.id}</p>
       </div>
