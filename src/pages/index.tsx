@@ -47,6 +47,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 
 const Home: NextPage<{ restaurants: Restaurant[] }> = () => {
+  const classes = useStyles();
   const { register, handleSubmit, errors, reset } = useForm<FormData>();
   const [restaurants, setRestaurants] = useState<Restaurant[]>([]);
 
@@ -69,39 +70,18 @@ const Home: NextPage<{ restaurants: Restaurant[] }> = () => {
     };
   }, []);
 
-  // const onSubmit = (data: FormData) => {
-  //   const newRestaurant = Restaurant.createNewRestaurant(data.name);
-  //   db.collection("restaurants").doc(newRestaurant.id).set(newRestaurant.toObject());
-  //   reset();
-  // };
-  const onDelete = (data) => {
-    console.log("on delete");
-    console.log(data.id);
-  };
-  const imageUrl =
-    "http://placehold.jp/24/eeeeee/999999/360x270.png?text=%E7%94%BB%E5%83%8F%E3%81%8C%E3%81%82%E3%82%8A%E3%81%BE%E3%81%9B%E3%82%93";
-
-  const tileData = [
-    { img: imageUrl, title: "hoge", cols: 1 },
-    { img: imageUrl, title: "hoge", cols: 1 },
-    { img: imageUrl, title: "hoge", cols: 1 },
-    { img: imageUrl, title: "hoge", cols: 1 },
-    { img: imageUrl, title: "hoge", cols: 1 },
-  ];
-  const classes = useStyles();
-
   return (
     <React.Fragment>
       <CssBaseline></CssBaseline>
       <AppBar position="static" className={classes.appbar}>
         <Toolbar>
           <Link href="/">
-            <Typography variant="h6" className={classes.title}>
-              TAKEOUT KUREP
+            <Typography component="h1" variant="h6" className={classes.title}>
+              呉グルメ☆お家でお店ご飯
             </Typography>
           </Link>
           <Link href="/restaurants/create">
-            <Button color="inherit">店舗の新規追加</Button>
+            <Button color="inherit">店舗追加</Button>
           </Link>
         </Toolbar>
       </AppBar>

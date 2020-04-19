@@ -1,13 +1,14 @@
 import Entity from "../support/entity";
 import { firestore } from "firebase";
 import * as uuid from "node-uuid";
+import BusinessHours from "./businessHours";
 
 interface IRestaurant {
   id: string;
   name: string;
+  area: string;
   address: string;
-  openingTime: string;
-  closingTime: string;
+  // businessHoursCollection: BusinessHours[];
   phoneNumber: string;
   note: string;
   canDeliver: boolean;
@@ -15,13 +16,14 @@ interface IRestaurant {
   createdAt: Date;
   updatedAt: Date;
 }
+type hoge = Omit<IRestaurant, "id" | "createdAt" | "updatedAt">;
 
 export default class Restaurant extends Entity implements IRestaurant {
   id: string;
   name: string;
+  area: string;
   address: string;
-  openingTime: string;
-  closingTime: string;
+  // businessHoursCollection: BusinessHours[];
   phoneNumber: string;
   note: string;
   canDeliver: boolean;
@@ -33,9 +35,9 @@ export default class Restaurant extends Entity implements IRestaurant {
     super();
     this.id = initialValues.id;
     this.name = initialValues.name;
+    this.area = initialValues.area;
     this.address = initialValues.address;
-    this.openingTime = initialValues.openingTime;
-    this.closingTime = initialValues.closingTime;
+    // this.businessHoursCollection = initialValues.businessHoursCollection;
     this.phoneNumber = initialValues.phoneNumber;
     this.note = initialValues.note;
     this.canDeliver = initialValues.canDeliver;
@@ -62,9 +64,9 @@ export default class Restaurant extends Entity implements IRestaurant {
     const values = {
       id: data.id,
       name: data.name,
+      area: data.area,
       address: data.address,
-      openingTime: data.openingTime,
-      closingTime: data.closingTime,
+      businessHoursCollection: data.businessHoursCollection,
       phoneNumber: data.phoneNumber,
       note: data.note,
       canDeliver: data.canDeliver,
@@ -79,9 +81,9 @@ export default class Restaurant extends Entity implements IRestaurant {
     return {
       id: this.id,
       name: this.name,
+      area: this.area,
       address: this.address,
-      openingTime: this.openingTime,
-      closingTime: this.closingTime,
+      // businessHoursCollection: this.businessHoursCollection,
       phoneNumber: this.phoneNumber,
       note: this.note,
       canDeliver: this.canDeliver,

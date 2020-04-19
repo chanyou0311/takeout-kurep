@@ -10,8 +10,7 @@ export default class RestaurantFirebaseRepository extends Repository
   }
 
   async getAll(): Promise<Restaurant[]> {
-    // TODO: あとでコレクションをrestaurantsに変更する
-    const snapshot = await this.db.collection("locations").get();
+    const snapshot = await this.db.collection("restaurants").get();
     const restaurants = snapshot.docs.map((doc) =>
       Restaurant.fromDocumentData(doc.data())
     );
@@ -19,9 +18,8 @@ export default class RestaurantFirebaseRepository extends Repository
   }
 
   async insert(restaurant: Restaurant): Promise<void> {
-    // TODO: あとでコレクションをrestaurantsに変更する
     const snapshot = await this.db
-      .collection("locations")
+      .collection("restaurants")
       .doc(restaurant.id)
       .set(restaurant.toObject());
   }

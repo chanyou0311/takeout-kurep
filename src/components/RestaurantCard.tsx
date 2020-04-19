@@ -33,6 +33,9 @@ const RestaurantCard: NextComponentType<
             {props.restaurant.name}
           </Typography>
           <Typography variant="body2" component="p">
+            エリア: {props.restaurant.area}
+          </Typography>
+          <Typography variant="body2" component="p">
             テイクアウト可能: {props.restaurant.canTakeOutDisplay()}
           </Typography>
           <Typography variant="body2" component="p">
@@ -43,12 +46,6 @@ const RestaurantCard: NextComponentType<
           </Typography>
           <Typography variant="body2" component="p">
             住所: {props.restaurant.addressDisplay()}
-          </Typography>
-          <Typography variant="body2" component="p">
-            営業開始時間: {props.restaurant.openingTime}
-          </Typography>
-          <Typography variant="body2" component="p">
-            営業終了時間: {props.restaurant.closingTime}
           </Typography>
           <Typography variant="body2" component="p">
             その他: {props.restaurant.noteDisplay}
