@@ -14,7 +14,7 @@
     "dotenv": "^8.2.0",
     "firebase": "^7.14.0",
     "firebase-admin": "^8.10.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "next": "9.3.4",
     "node-uuid": "^1.4.8",
     "react": "16.13.1",
